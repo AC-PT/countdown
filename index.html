@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Countdown to 28 March</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #020617, #0f172a);
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .container {
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    h1 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      opacity: 0.85;
+      margin-bottom: 1rem;
+    }
+
+    .time {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .label {
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Countdown to 28 March</h1>
+    <div class="time" id="countdown">Loading…</div>
+    <div class="label">Lisbon time (Europe/Lisbon)</div>
+  </div>
+
+  <script>
+    function getLisbonTime(date = new Date()) {
+      return new Date(
+        date.toLocaleString("en-US", { timeZone: "Europe/Lisbon" })
+      );
+    }
+
+    const target = getLisbonTime(new Date("2026-03-28T00:00:00")).getTime();
+
+    function updateCountdown() {
+      const now = getLisbonTime().getTime();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        document.getElementById("countdown").innerHTML = "⏰ Time’s up!";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById("countdown").innerHTML =
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
